@@ -1,0 +1,14 @@
+{
+  "name": "stealthgpt",
+  "version": "1.0.0",
+  "description": "Humanize text, generate content drafts, and retrieve results with StealthGPT.",
+  "author": {
+    "name": "StealthGPT",
+    "email": "jozef@stealthgpt.ai"
+  },
+  "homepage": "https://www.stealthgpt.ai/mcp",
+  "repository": "https://github.com/StealthGPT/stealthgpt-mcp",
+  "keywords": ["stealthgpt", "mcp", "writing", "humanization", "content"],
+  "logo": "assets/icon.png",
+  "mcpServers": "./.mcp.json"
+}

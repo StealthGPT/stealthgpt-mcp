@@ -1,0 +1,14 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.StealthGPT/stealthgpt",
+  "title": "StealthGPT",
+  "description": "Humanize text, generate content drafts, and retrieve run results through StealthGPT.",
+  "version": "1.0.0",
+  "websiteUrl": "https://www.stealthgpt.ai/mcp",
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://www.stealthgpt.ai/api/mcp/mcp"
+    }
+  ]
+}

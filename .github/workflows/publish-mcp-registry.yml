@@ -1,0 +1,49 @@
+name: Publish MCP Registry metadata
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions: {}
+
+jobs:
+  publish:
+    if: github.repository == 'StealthGPT/stealthgpt-mcp'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      id-token: write
+    env:
+      MCP_PUBLISHER_VERSION: v1.8.7
+      MCP_PUBLISHER_SHA256: 00b21004149a4ce66f0782508ae4a2bce67d1bea395a8da0bd8028159fb59579
+    steps:
+      - name: Check out release metadata
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          persist-credentials: false
+
+      - name: Check release identity
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_REF_NAME" = "v$(jq -r '.version' server.json)"
+          jq -e '.name == "io.github.StealthGPT/stealthgpt"' server.json
+
+      - name: Download and verify publisher
+        shell: bash
+        run: |
+          set -euo pipefail
+          archive="$RUNNER_TEMP/mcp-publisher_linux_amd64.tar.gz"
+          url="https://github.com/modelcontextprotocol/registry/releases/download/$MCP_PUBLISHER_VERSION/mcp-publisher_linux_amd64.tar.gz"
+          curl --proto '=https' --tlsv1.2 --fail --location --silent --show-error --retry 3 --output "$archive" "$url"
+          printf '%s  %s\n' "$MCP_PUBLISHER_SHA256" "$archive" | sha256sum --check -
+          tar -xzf "$archive" -C "$RUNNER_TEMP" mcp-publisher
+
+      - name: Authenticate with GitHub OIDC
+        shell: bash
+        run: '"$RUNNER_TEMP/mcp-publisher" login github-oidc'
+
+      - name: Publish remote server metadata
+        shell: bash
+        run: '"$RUNNER_TEMP/mcp-publisher" publish'

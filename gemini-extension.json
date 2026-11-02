@@ -1,0 +1,10 @@
+{
+  "name": "stealthgpt",
+  "version": "1.0.0",
+  "description": "Humanize text, generate content drafts, and retrieve results with StealthGPT.",
+  "mcpServers": {
+    "stealthgpt": {
+      "httpUrl": "https://www.stealthgpt.ai/api/mcp/mcp"
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "stealthgpt": {
+      "type": "http",
+      "url": "https://www.stealthgpt.ai/api/mcp/mcp"
+    }
+  }
+}
